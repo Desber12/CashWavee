@@ -23,10 +23,10 @@
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border px-4 py-2">ID</th>
-                    <th class="border px-4 py-2">Nama Pengguna</th>
+                    <th class="border px-4 py-2">Nama User</th>
                     <th class="border px-4 py-2">Total Harga</th>
                     <th class="border px-4 py-2">Status</th>
-                    <th class="border px-4 py-2">Tanggal</th>
+                    <th class="border px-4 py-2">Tanggal Transaksi</th>
                 </tr>
             </thead>
             <tbody>

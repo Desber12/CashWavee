@@ -21,11 +21,12 @@
             <table class="w-full table-auto border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100 text-left">
-                        <th class="border border-gray-300 px-4 py-2">Gambar</th>
                         <th class="border border-gray-300 px-4 py-2">Nama</th>
-                        <th class="border border-gray-300 px-4 py-2">Harga</th>
-                        <th class="border border-gray-300 px-4 py-2">Stok</th>
                         <th class="border border-gray-300 px-4 py-2">Kategori</th>
+                        <th class="border border-gray-300 px-4 py-2">Harga</th>
+                        <th class="border border-gray-300 px-4 py-2">Gambar</th>
+                        <th class="border border-gray-300 px-4 py-2">Tanggal dibuat</th>
+                        <th class="border border-gray-300 px-4 py-2">Stok</th>
                         <th class="border border-gray-300 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
@@ -34,7 +35,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="border border-gray-300 px-4 py-2">
                                 @if ($produk->gambar)
-                                    <img src="{{ asset('storage/' . $produk->gambar) }}" alt="Gambar Produk" class="w-16 h-16 object-cover">
+                                    <img src="/storage/{{ $produk->gambar }}" alt="Gambar Produk" class="w-16 h-16 object-cover">
                                 @else
                                     <span class="text-gray-400 italic">Tidak ada gambar</span>
                                 @endif
