@@ -7,7 +7,7 @@
 
     <div class="p-6">
         @if ($errors->any())
-            <div class="mb-4 text-red-600">
+            <div class="mb-4 text-red-500">
                 <ul class="list-disc pl-6">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -55,7 +55,7 @@
             {{-- Tombol Submit --}}
             <div class="flex justify-end">
                 <button type="submit"
-                    class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                    class="px-4 py-2 bg-red-500 text-white rounded">
                     Simpan
                     
                 </button>
