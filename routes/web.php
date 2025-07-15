@@ -6,15 +6,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
-
-
+use App\Http\Controllers\AdminController; // pastikan sudah ada AdminController
 
 // Redirect root ke dashboard
 Route::get('/', function () {
     return redirect('/dashboard');
 })->name('home');
-
-
 
 // Dashboard, hanya untuk user yang sudah login dan terverifikasi
 Route::get('/dashboard', function () {
@@ -38,11 +35,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('orders', OrderController::class);
 });
 
+// Update produk
 Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produk.update');
 
 // Routes dari Laravel Breeze/Fortify/Jetstream (auth bawaan Laravel)
 require __DIR__.'/auth.php';
-
 
 Route::resource('user', UserController::class)->names([
     'index'   => 'user.index',
@@ -53,3 +50,13 @@ Route::resource('user', UserController::class)->names([
     'update'  => 'user.update',
     'destroy' => 'user.destroy',
 ]);
+
+// ✅ Route untuk Admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+});
+
+// ✅ Route untuk User
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+});
