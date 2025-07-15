@@ -10,6 +10,7 @@
            class="bg-blue-600 hover:bg-blue-700 text-black font-semibold px-4 py-2 rounded shadow inline-block">
             + Tambah Produk
         </a>
+    </div>
 
         @if(session('success'))
             <div class="mt-4 text-green-600 font-medium">
@@ -25,7 +26,6 @@
                         <th class="border border-gray-300 px-4 py-2">Kategori</th>
                         <th class="border border-gray-300 px-4 py-2">Harga</th>
                         <th class="border border-gray-300 px-4 py-2">Gambar</th>
-                        <th class="border border-gray-300 px-4 py-2">Tanggal dibuat</th>
                         <th class="border border-gray-300 px-4 py-2">Stok</th>
                         <th class="border border-gray-300 px-4 py-2">Aksi</th>
                     </tr>
