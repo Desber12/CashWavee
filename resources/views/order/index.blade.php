@@ -13,7 +13,7 @@
         @endif
 
         <div class="mb-4">
-            <a href="{{ route('orders.create') }}"
+            <a href="{{ route('order.create') }}"
                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                 Tambah Pesanan
             </a>
@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($orders as $order)
+                @foreach ($order as $order)
                     <tr>
                         <td class="border px-4 py-2">{{ $order->id }}</td>
                         <td class="border px-4 py-2">{{ $order->user->name }}</td>

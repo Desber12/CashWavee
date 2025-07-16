@@ -1,37 +1,114 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">Daftar Pengguna</h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="p-4">
-        @if (session('success'))
-            <div class="mb-4 text-green-600 font-semibold">
-                {{ session('success') }}
+@section('title', 'Users')
+
+@push('style')
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
+@endpush
+
+@section('main')
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>Users</h1>
+                <div class="section-header-button">
+                    <a href="{{ route('user.create') }}" class="btn btn-primary">Add New</a>
+                </div>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="#">Users</a></div>
+                    <div class="breadcrumb-item">All Users</div>
+                </div>
             </div>
-        @endif
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12">
+                        @include('layouts.alert')
+                    </div>
+                </div>
 
-        <table class="w-full border border-gray-300 rounded">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border px-4 py-2">ID</th>
-                    <th class="border px-4 py-2">Nama</th>
-                    <th class="border px-4 py-2">Email</th>
-                    <th class="border px-4 py-2">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td class="border px-4 py-2">{{ $user->id }}</td>
-                        <td class="border px-4 py-2">{{ $user->name }}</td>
-                        <td class="border px-4 py-2">{{ $user->email }}</td>
-                        <td class="border px-4 py-2">
-                            <a href="{{ route('user.edit', $user->id) }}" class="text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-            
-        </table>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <div class="float-right">
+                                    <form method="GET" action="{{ route('user.index') }}">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search" name="name">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="clearfix mb-3"></div>
+
+                                <div class="table-responsive">
+                                    <table class="table-striped table">
+                                        <tr>
+
+                                            <th>Name</th>
+                                            <th>Email</th>
+
+                                            <th>Created At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        @foreach ($users as $user)
+                                            <tr>
+
+                                                <td>{{ $user->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $user->email }}
+                                                </td>
+
+                                                <td>{{ $user->created_at }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href='{{ route('user.edit', $user->id) }}'
+                                                            class="btn btn-sm btn-info btn-icon">
+                                                            <i class="fas fa-edit"></i>
+                                                            Edit
+                                                        </a>
+
+                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                            class="ml-2">
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                            <input type="hidden" name="_token"
+                                                                value="{{ csrf_token() }}" />
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+
+                                    </table>
+                                </div>
+                                <div class="float-right">
+                                    {{ $users->withQueryString()->links() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</x-app-layout>
+@endsection
+
+@push('scripts')
+    <!-- JS Libraies -->
+    <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="{{ asset('js/page/features-posts.js') }}"></script>
+@endpush

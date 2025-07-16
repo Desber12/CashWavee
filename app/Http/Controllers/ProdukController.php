@@ -2,72 +2,87 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProdukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $produks = Produk::all();
-        return view('produk.index', compact('produks'));
+        $produk = DB::table('produk')
+            ->when($request->input('name'), function ($query, $name) {
+                // pastikan kolomnya sesuai dengan tabel di database
+                return $query->where('name', 'like', '%' . $name . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // variabel yang dikirim: $produk
+        return view('produk.index', compact('produk'));
     }
+
 
     public function create()
     {
-        return view('produk.create');
+        $categories = DB::table('categories')->get();
+        return view('pages.produk.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama_produk' => 'required|string|max:255',
-            'harga' => 'required|numeric|min:0',
-            'stok' => 'required|integer|min:0',
-            'kategori' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        if ($request->hasFile('gambar')) {
-            $gambarPath = $request->file('gambar')->store('gambar_produk', 'public');
-            $validated['gambar'] = $gambarPath;
-        }
-
-        Produk::create($validated);
-
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
-    }
-
-    public function edit(Produk $produk)
-    {
-        return view('produk.edit', compact('produk'));
-    }
-
-    public function update(Request $request, Produk $produk)
-    {
         $request->validate([
-            'nama_produk' => 'required|string|max:255',
-            'harga' => 'required|numeric|min:0',
-            'stok' => 'required|integer|min:0',
-            'kategori' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'name' => 'required|min:3|unique:produk',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+            'category_id' => 'required',
+            'image' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
-        $data = $request->only(['nama_produk', 'harga', 'stok', 'kategori']);
+        $filename = time() . '.' . $request->image->extension();
+        $request->image->storeAs('public/produk', $filename);
+        $data = $request->all();
 
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('gambar_produk', 'public');
-        }
+        $category = DB::table('categories')->where('id', $request->category_id)->first();
 
-        $produk->update($data);
+        $produk = new \App\Models\produk;
+        $produk->name = $request->name;
+        $produk->price = (int) $request->price;
+        $produk->stock = (int) $request->stock;
+        $produk->category = $category->name;
+        $produk->category_id = $request->category_id;
+        $produk->image = $filename;
+        $produk->save();
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil diupdate');
+        return redirect()->route('produk.index')->with('success', 'produk successfully created');
     }
 
-    public function destroy(Produk $produk)
+    public function edit($id)
     {
-        $produk->delete();
-
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus');
+        $produk = \App\Models\produk::findOrFail($id);
+        $categories = DB::table('categories')->get();
+        return view('pages.produk.edit', compact('produk', 'categories'));
     }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $produk = \App\Models\produk::findOrFail($id);
+        $category = DB::table('categories')->where('id', $request->category_id)->first();
+        $data['category'] = $category->name;
+        $produk->update($data);
+        return redirect()->route('produk.index')->with('success', 'produk successfully updated');
+    }
+
+    public function destroy($id)
+{
+    // Hapus data terkait di tabel _items
+    DB::table('order_produk')->where('produk_id', $id)->delete();
+
+    // Hapus produk dari tabel produk
+    $produk = \App\Models\produk::findOrFail($id);
+    $produk->delete();
+
+    return redirect()->route('produk.index')->with('success', 'produk successfully deleted');
+}
+
 }

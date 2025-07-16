@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('orders.store') }}">
+        <form method="POST" action="{{ route('order.store') }}">
             @csrf
 
             {{-- Pilih User --}}
@@ -59,7 +59,7 @@
                     Simpan
                     
                 </button>
-                <a href="{{ route('orders.index') }}" class="ml-4 text-blue-600 hover:underline" >Kembali</a>
+                <a href="{{ route('order.index') }}" class="ml-4 text-blue-600 hover:underline" >Kembali</a>
             </div>
         </form>
     </div>

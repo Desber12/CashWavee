@@ -10,24 +10,26 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('order_produk', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('order_id')->constrained('order')->onDelete('cascade');
-        $table->unsignedBigInteger('produk_id')->constrained('produk')->onDelete('cascade');
-        $table->integer('jumlah');
-        
-        $table->decimal('subtotal', 12, 2);
-        $table->timestamps();
-    });
-}
-
+    {
+        Schema::create('order_produk', function (Blueprint $table) {
+            $table->id();
+            //order id
+            $table->foreignId('order_id')->constrained('order');
+            //product id
+            $table->foreignId('produk_id')->constrained('produk');
+            //quantity
+            $table->integer('quantity');
+            //total price
+            $table->integer('total_price');
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('order_produk');
     }
 };

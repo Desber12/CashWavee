@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
-            $table->decimal('total_harga', 12, 2);
-            $table->string('status')->default('pending');
+            //transaction time
+            $table->timestamp('transaction_time');
+            //total price
+            $table->integer('total_price');
+            //total item
+            $table->integer('total_item');
+            //kasir id
+            $table->foreignId('kasir_id')->constrained('user');
+            //payment method
+            $table->string('payment_method');
+
             $table->timestamps();
         });
     }

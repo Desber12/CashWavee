@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('produk', ProdukController::class);
-    Route::resource('orders', OrderController::class);
+    Route::resource('order', OrderController::class);
 });
 
 // Update produk

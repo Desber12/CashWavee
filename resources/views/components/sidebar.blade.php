@@ -19,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('orders.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
+            <a href="{{ route('order.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
                 Order
             </a>
         </li>

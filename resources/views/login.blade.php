@@ -23,7 +23,7 @@
                 </div>
                 <Input
                   type={field.type}
-                  className="h-[66px] bg-[#fefeff] border-2 border-[#edeffd] rounded"
+                  className="h-[66px] bg-[#fefeff] borders-2 borders-[#edeffd] rounded"
                 />
               </div>
             ))}

@@ -7,15 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
 {
-    use HasFactory;
-    protected $table = 'produk';
 
+    use HasFactory;
+
+
+   protected $table = 'produk'; 
     protected $fillable = [
-        'nama_produk',
-        'harga',
-        'stok',
-        'kategori',
-        'gambar'
+        'name',
+        'description',
+        'price',
+        'stock',
+        'category',
+        'category_id',
+        'image',
+        'is_best_seller'
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

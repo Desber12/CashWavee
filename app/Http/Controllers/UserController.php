@@ -2,81 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-    return view('user.index', compact('users'));
+        $users = User::when($request->input('name'), function ($query, $name) {
+                return $query->where('name', 'like', '%' . $name . '%');
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        if ($request->wantsJson()) {
+            return response()->json($users);
+        }
+
+        // ✅ arahkan ke folder user
+        return view('user.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        // ✅ arahkan ke folder user
+        return view('user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+        $user = User::create($data);
+
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'User created', 'user' => $user], 201);
+        }
+
+        return redirect()->route('user.index')->with('success', 'User successfully created');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
         $user = User::findOrFail($id);
-    return view('user.edit', compact('user'));
+        // ✅ arahkan ke folder user
+        return view('user.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function show(User $user)
     {
-         $user = User::findOrFail($id);
+        if (request()->wantsJson()) {
+            return response()->json($user);
+        }
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-    ]);
-
-    $user->update([
-        'name' => $request->name,
-        'email' => $request->email,
-    ]);
-
-    return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
+        return abort(404); // atau redirect sesuai kebutuhan web
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'User updated', 'user' => $user]);
+        }
+
+        return redirect()->route('user.index')->with('success', 'User successfully updated');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        if (request()->wantsJson()) {
+            return response()->json(['message' => 'User deleted']);
+        }
+
+        return redirect()->route('user.index')->with('success', 'User successfully deleted');
     }
 }
-
-
