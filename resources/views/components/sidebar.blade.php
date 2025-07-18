@@ -14,8 +14,8 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('produk.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
-                Produk
+            <a href="{{ route('product.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
+                Product
             </a>
         </li>
         <li>
