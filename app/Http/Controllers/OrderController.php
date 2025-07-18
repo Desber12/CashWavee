@@ -9,10 +9,9 @@ class OrderController extends Controller
     //index
     public function index()
     {
-        $order = \App\Models\Order::with('kasir')->orderBy('created_at', 'desc')->paginate(10);
+        $orders = \App\Models\Order::with('kasir')->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('order.index', compact('order'));
-
+        return view('order.index', compact('orders'));
     }
 
     //view
@@ -21,9 +20,9 @@ class OrderController extends Controller
         $order = \App\Models\Order::with('kasir')->findOrFail($id);
 
         //get order items by order id
-        $orderItems = \App\Models\order_produk::with('produk')->where('order_id', $id)->get();
+        $orderItems = \App\Models\Order_produk::with('product')->where('order_id', $id)->get();
 
 
-        return view('pages.order.view', compact('order', 'orderItems'));
+        return view('order.view', compact('order', 'orderItems'));
     }
 }

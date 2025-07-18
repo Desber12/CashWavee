@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Orders')
+@section('title', 'Order Detail')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,12 +11,12 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Orders</h1>
+                <h1>Order Detail</h1>
 
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Orders</a></div>
-                    <div class="breadcrumb-item">All Orders</div>
+                    <div class="breadcrumb-item">Order Detail</div>
                 </div>
             </div>
             <div class="section-body">
@@ -25,11 +25,21 @@
                         @include('layouts.alert')
                     </div>
                 </div>
+                <h2 class="section-title">Order Detail</h2>
+                <p class="section-lead">
+                <div>Total Price {{ $order->total_price }}</div>
+                <div>Transaction Time {{ $order->transaction_time }}</div>
+                <div>Total Item {{ $order->total_item }}</div>
+
+                </p>
+
 
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
-
+                            <div class="card-header">
+                                <h4>All Products</h4>
+                            </div>
                             <div class="card-body">
 
 
@@ -40,25 +50,25 @@
                                     <table class="table-striped table">
                                         <tr>
 
-                                            <th>Transaction Time</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
                                             <th>Total Price</th>
-                                            <th>Total Item</th>
-                                            <th>Kasir</th>
+
                                         </tr>
-                                        @foreach ($orders as $order)
+                                        @foreach ($orderItems as $item)
                                             <tr>
 
-                                                <td><a
-                                                        href="{{ route('order.show', $order->id) }}">{{ $order->transaction_time }}</a>
+                                                <td>{{ $item->product->name }}</td>
                                                 </td>
                                                 <td>
-                                                    {{ $order->total_price }}
+                                                    {{ $item->product->price }}
                                                 </td>
                                                 <td>
-                                                    {{ $order->total_item }}
+                                                    {{ $item->quantity }}
                                                 </td>
                                                 <td>
-                                                    {{ $order->kasir->name }}
+                                                    {{ $item->total_price }}
 
                                                 </td>
 
@@ -68,9 +78,7 @@
 
                                     </table>
                                 </div>
-                                <div class="float-right">
-                                    {{ $orders->withQueryString()->links() }}
-                                </div>
+
                             </div>
                         </div>
                     </div>

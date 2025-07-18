@@ -24,89 +24,66 @@
                 </div>
             </div>
 
-            <div class="section-body">
+           <div class="card">
+    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="card-header">
+            <h4>Product Form</h4>
+        </div> {{-- ✅ Tutup card-header di sini --}}
+        <div class="card-body">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-                <div class="card">
-                    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" class="form-control @error('price') is-invalid @enderror" name="price">
+                @error('price')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
-                                    name="name">
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input type="number"
-                                    class="form-control @error('price')
-                                is-invalid
-                            @enderror"
-                                    name="price">
-                                @error('price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Stock</label>
-                                <input type="number"
-                                    class="form-control @error('stock')
-                                is-invalid
-                            @enderror"
-                                    name="stock">
-                                @error('stock')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
+            <div class="form-group">
+                <label>Stock</label>
+                <input type="number" class="form-control @error('stock') is-invalid @enderror" name="stock">
+                @error('stock')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-                            <div class="form-group ">
-                                <label>Category</label>
-                                <select class="form-control selectric @error('category_id') is-invalid @enderror"
-                                    name="category_id">
-                                    <option value="">Select Category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('category_id')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select class="form-control selectric @error('category_id') is-invalid @enderror" name="category_id">
+                    <option value="">Select Category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-                            <div class="form-group">
-                                <label>Photo Product</label>
-                                <div class="col-sm-9">
-                                    <input type="file" class="form-control" name="image"
-                                        @error('image') is-invalid @enderror>
-                                </div>
-                                @error('image')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-
-                        </div>
-                        <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+            <div class="form-group">
+                <label>Photo Product</label>
+                <div class="col-sm-9 p-0">
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
                 </div>
+                @error('image')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
 
             </div>
         </section>

@@ -38,8 +38,8 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
-        $filename = time() . '.' . $request->image->extension();
-        $request->image->storeAs('public\storage\gambar_produk', $filename);
+          $filename = time() . '.' . $request->image->extension();
+        $request->image->storeAs('public/products', $filename);
         $data = $request->all();
 
         $category = DB::table('categories')->where('id', $request->category_id)->first();
@@ -75,8 +75,8 @@ class ProductController extends Controller
 
     public function destroy($id)
 {
-    // Hapus data terkait di tabel order_items
-    DB::table('order_items')->where('product_id', $id)->delete();
+    // Hapus data terkait di tabel order_produk
+    DB::table('order_produk')->where('produk_id', $id)->delete();
 
     // Hapus produk dari tabel products
     $product = \App\Models\Product::findOrFail($id);
