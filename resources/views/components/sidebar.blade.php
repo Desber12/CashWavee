@@ -1,33 +1,47 @@
-<div class="w-64 h-screen bg-white border-r">
-    <div class="p-6 font-bold text-xl text-gray-700">
-        CASHWAVE
-    </div>
-    <ul class="space-y-2 mt-6">
-        <li>
-            <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
-                Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('user.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
-                User 
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('product.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
-                Product
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('order.index') }}" class="block py-2 px-4 hover:bg-gray-100 text-gray-800">
-                Order
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('logout') }}" class="block py-2 px-4 hover:bg-red-100 text-red-600">
-                Logout
-            </a>
-        </li>
-    </ul>
-</div>
+<div class="main-sidebar sidebar-style-2">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="index.html">CASHWAVE</a>
+        </div>
+        <div class="sidebar-brand sidebar-brand-sm">
+            <a href="index.html">CW</a>
+        </div>
+        <ul class="sidebar-menu">
+           <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link "><i
+                        class="fas fa-fire"></i><span>Dashboard</span></a>
 
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('user.index') }}" class="nav-link "><i class="fas fa-fire"></i><span>Users</span></a>
+
+
+
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('categories.index') }}" class="nav-link "><i
+                        class="fas fa-fire"></i><span>Categories</span></a>
+
+            </li>
+
+            <li class="nav-item ">
+                <a href="{{ route('product.index') }}" class="nav-link"><i
+                        class="fas fa-fire"></i><span>Products</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="nav-link" href="{{ route('product.index') }}">All Products</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('order.index') }}" class="nav-link "><i
+                        class="fas fa-fire"></i><span>Orders</span></a>
+
+            </li>
+
+    </aside>
+</div>

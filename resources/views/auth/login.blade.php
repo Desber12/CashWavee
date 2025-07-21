@@ -1,46 +1,71 @@
-@extends('layouts.guest')
+@extends('layouts.auth')
 
-@section('content')
-<div class="flex justify-center bg-white py-20">
-    <div class="w-full max-w-md rounded-lg shadow-lg bg-white">
-        <div class="h-[3px] bg-[#f93c39] w-full mx-auto"></div>
+@section('title', 'Login CashWave')
 
-        <div class="p-8">
-            <h2 class="font-semibold text-[#f93c39] text-[32px] font-['Lexend_Deca'] text-left mb-8">
-                Login
-            </h2>
+@push('style')
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ asset('library/bootstrap-social/bootstrap-social.css') }}">
+@endpush
 
-            @if(session('status'))
-                <div class="mb-4 text-sm text-red-600">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('login') }}" class="space-y-5">
-                @csrf
-
-                <div>
-                    <input type="email" name="email" required autofocus
-                        placeholder="Email"
-                        class="w-full h-12 bg-[#fefeff] border-2 border-[#edeffd] rounded px-4 text-black text-base font-['Exo_2']">
-                </div>
-
-                <div>
-                    <input type="password" name="password" required
-                        placeholder="Password"
-                        class="w-full h-12 bg-[#fefeff] border-2 border-[#edeffd] rounded px-4 text-black text-base font-['Exo']">
-                </div>
-
-                <button type="submit"
-                    class="w-full h-12 mt-6 bg-[#f93c39] hover:bg-[#e03532] rounded text-white text-xl font-semibold font-['Lexend_Deca']">
-                    Login
-                </button>
-            </form>
+@section('main')
+    <div class="card card-primary">
+        <div class="card-header">
+            <h4>Login</h4>
         </div>
 
-        <div class="text-center py-4 font-semibold text-black text-sm font-['Inter']">
-            Copyright ©CashWave
+        <div class="card-body">
+            <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
+                @csrf
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email"
+                        class="form-control @error('email')
+                        is-invalid
+                    @enderror"
+                        name="email" tabindex="1" autofocus>
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
+                    <div class="d-block">
+                        <label for="password" class="control-label">Password</label>
+
+                    </div>
+                    <input id="password" type="password"
+                        class="form-control @error('password')
+                        is-invalid
+                    @enderror"
+                        name="password" tabindex="2">
+                    @error('password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        @enderror
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                            Login
+                        </button>
+                    </div>
+            </form>
+
+
         </div>
     </div>
-</div>
+    {{-- <div class="text-muted mt-5 text-center">
+        Don't have an account? <a href="{{ route('register') }}">Create One</a>
+    </div> --}}
 @endsection
+
+@push('scripts')
+    <!-- JS Libraies -->
+
+    <!-- Page Specific JS File -->
+@endpush

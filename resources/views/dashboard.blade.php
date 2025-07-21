@@ -3,29 +3,9 @@
 @section('title', 'General Dashboard')
 
 @push('style')
-<style>
-    .main-content {
-        background: url('{{ asset('img/background.jpg') }}') no-repeat center center;
-        background-size: cover;
-        border-radius: 10px;
-        padding: 20px;
-        min-height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
-    .main-content::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.85);
-        border-radius: 10px;
-        z-index: 0;
-    }
-    .main-content > * {
-        position: relative;
-        z-index: 1;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
+
 @endpush
 
 

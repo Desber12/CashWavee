@@ -61,3 +61,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
 // Auth routes (dari Breeze/Jetstream)
 require __DIR__ . '/auth.php';
+
+// Resource Category
+Route::resource('categories', \App\Http\Controllers\CategoryController::class);
