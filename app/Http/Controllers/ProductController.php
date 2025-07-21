@@ -29,32 +29,32 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|min:3|unique:products',
-            'price' => 'required|integer',
-            'stock' => 'required|integer',
-            'category_id' => 'required',
-            'image' => 'required|image|mimes:png,jpg,jpeg'
-        ]);
+{
+    $request->validate([
+        'name' => 'required|min:3|unique:products',
+        'price' => 'required|integer',
+        'stock' => 'required|integer',
+        'category_id' => 'required',
+        'image' => 'required|image|mimes:png,jpg,jpeg'
+    ]);
 
-          $filename = time() . '.' . $request->image->extension();
-        $request->image->storeAs('public/products', $filename);
-        $data = $request->all();
+    // Simpan gambar ke storage/app/public/products
+    $path = $request->file('image')->store('products', 'public');
 
-        $category = DB::table('categories')->where('id', $request->category_id)->first();
+    $category = DB::table('categories')->where('id', $request->category_id)->first();
 
-        $product = new \App\Models\Product;
-        $product->name = $request->name;
-        $product->price = (int) $request->price;
-        $product->stock = (int) $request->stock;
-        $product->category = $category->name;
-        $product->category_id = $request->category_id;
-        $product->image = $filename;
-        $product->save();
+    $product = new \App\Models\Product;
+    $product->name = $request->name;
+    $product->price = (int) $request->price;
+    $product->stock = (int) $request->stock;
+    $product->category = $category->name;
+    $product->category_id = $request->category_id;
+    $product->image = $path;
+    $product->save();
 
-        return redirect()->route('product.index')->with('success', 'Product successfully created');
-    }
+    return redirect()->route('product.index')->with('success', 'Product successfully created');
+}
+
 
     public function edit($id)
     {

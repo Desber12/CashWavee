@@ -45,31 +45,20 @@
                                             <th>Total Item</th>
                                             <th>Kasir</th>
                                         </tr>
-                                        @foreach ($orders as $order)
-                                            <tr>
-
-                                                <td><a
-                                                        href="{{ route('order.show', $order->id) }}">{{ $order->transaction_time }}</a>
-                                                </td>
-                                                <td>
-                                                    {{ $order->total_price }}
-                                                </td>
-                                                <td>
-                                                    {{ $order->total_item }}
-                                                </td>
-                                                <td>
-                                                    {{ $order->kasir->name }}
-
-                                                </td>
-
-                                            </tr>
-                                        @endforeach
+                                        @foreach ($order as $item)
+    <tr>
+        <td><a href="{{ route('order.show', $item->id) }}">{{ $item->transaction_time }}</a></td>
+        <td>{{ $item->total_price }}</td>
+        <td>{{ $item->total_item }}</td>
+        <td>{{ $item->kasir->name }}</td>
+    </tr>
+@endforeach
 
 
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $orders->withQueryString()->links() }}
+                                    {{ $order->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

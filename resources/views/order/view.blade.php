@@ -56,19 +56,19 @@
                                             <th>Total Price</th>
 
                                         </tr>
-                                        @foreach ($orderItems as $item)
+                                        @foreach ($orderProducts as $product)
                                             <tr>
 
-                                                <td>{{ $item->product->name }}</td>
+                                                <td>{{ $product->product->name }}</td>
                                                 </td>
                                                 <td>
-                                                    {{ $item->product->price }}
+                                                    {{ $product->product->price }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->quantity }}
+                                                    {{ $product->jumlah }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->total_price }}
+                                                    {{ $product->subtotal }}
 
                                                 </td>
 

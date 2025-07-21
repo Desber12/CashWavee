@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController;   
 
 // Redirect root ke dashboard
 Route::get('/', function () {
@@ -49,10 +49,10 @@ Route::middleware('auth')->group(function () {
     ]);
 });
 
-// Admin Dashboard
+ /*// Admin Dashboard
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-});
+}); */
 
 // User Dashboard
 Route::middleware(['auth', 'role:user'])->group(function () {
