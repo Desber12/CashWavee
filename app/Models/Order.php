@@ -22,4 +22,15 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'kasir_id', 'id');
     }
+
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_produk', 'order_id', 'produk_id')
+                    ->withPivot('quantity', 'created_at', 'updated_at')
+                    ->withTimestamps();
+    }
 }

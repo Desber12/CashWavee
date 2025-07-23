@@ -54,6 +54,7 @@
                                                 <th>Name</th>
                                                 <th>Category</th>
                                                 <th>Price</th>
+                                                <th>Stock</th>
                                                 <th>Photo</th>
                                                 <th>Created At</th>
                                                 <th>Action</th>
@@ -65,10 +66,13 @@
                                                     <td>{{ $product->name }}</td>
                                                     <td>{{ $product->category }}</td>
                                                     <td>{{ $product->price }}</td>
+                                                    <td>{{ $product->stock }}</td>
                                                     <td>
                                                        @if ($product->image)
-                                                        <img src="/storage/{{ $product->image }}"
-                                                            alt="" width="100px" class="img-thumbnail">
+                                                        <img src="{{ asset('storage/' . $product->image) }}"
+                                                            alt="Product"
+                                                            style="width: 48px; height: 48px; object-fit: cover; border-radius: 6px;">
+
                                                     @else
                                                         <span class="badge badge-danger">No Image</span>
                                                     @endif

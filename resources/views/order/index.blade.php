@@ -47,7 +47,7 @@
                                         </tr>
                                         @foreach ($order as $item)
     <tr>
-        <td><a href="{{ route('order.show', $item->id) }}">{{ $item->transaction_time }}</a></td>
+        <td><a href="{{ route('order.show', $item->id) }}">{{ $item->created_at }}</a></td>
         <td>{{ $item->total_price }}</td>
         <td>{{ $item->total_item }}</td>
         <td>{{ $item->kasir->name }}</td>

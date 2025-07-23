@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -29,7 +31,7 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-{
+    {
     $request->validate([
         'name' => 'required|min:3|unique:products',
         'price' => 'required|integer',
@@ -74,7 +76,7 @@ class ProductController extends Controller
     }
 
     public function destroy($id)
-{
+    {
     // Hapus data terkait di tabel order_produk
     DB::table('order_produk')->where('produk_id', $id)->delete();
 
@@ -83,6 +85,6 @@ class ProductController extends Controller
     $product->delete();
 
     return redirect()->route('product.index')->with('success', 'Product successfully deleted');
-}
+    }
 
 }

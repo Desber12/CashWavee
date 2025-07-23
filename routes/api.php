@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProductController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -16,6 +17,10 @@ Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout'
 
 // api resource product
 Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class)->middleware('auth:sanctum');
+Route::get('/product/{id}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
+Route::get('/product/category/{id}', [\App\Http\Controllers\Api\ProductController::class, 'filterByCategory']);
+Route::get('/products/category/{id}', [\App\Http\Controllers\Api\ProductController::class, 'getByCategory']);
+
 
 // api resource order
 Route::apiResource('orders', \App\Http\Controllers\Api\OrderController::class)->middleware('auth:sanctum');

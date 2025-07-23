@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductController extends Controller
         ]);
 
         $filename = time() . '.' . $request->image->extension();
-        $request->image->storeAs('public/products', $filename);
+        $request->image->storeAs('public/product', $filename);
         $category = \App\Models\Category::where('id', $request->category_id)->first();
         $product = \App\Models\Product::create([
             'name' => $request->name,
@@ -66,7 +67,20 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+    $product = \App\Models\Product::find($id);
+
+    if ($product) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Product',
+            'data' => $product
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Product Not Found',
+        ], 404);
+    }
     }
 
     /**
@@ -84,4 +98,21 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function getByCategory($id)
+    {
+    $product = Product::where('category_id', $id)->get();
+    return response()->json($product);
+    }
+
+    public function filterByCategory($id)
+{
+    $product = Product::where('category_id', $id)->get();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'List of products by category',
+        'data' => $product
+    ], 200);
+}
 }
