@@ -57,12 +57,13 @@
 
             <div class="form-group">
                 <label>Category</label>
-                <select class="form-control selectric @error('category_id') is-invalid @enderror" name="category_id">
-                    <option value="">Select Category</option>
+                <select name="category_id" class="form-control selectric" required>
+                        <option value="" disabled selected hidden>Select Category</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
+
                 @error('category_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

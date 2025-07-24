@@ -26,4 +26,5 @@ class OrderController extends Controller
 
         return view('order.view', compact('order', 'orderProducts'));
     }
+    
 }

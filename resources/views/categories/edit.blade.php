@@ -26,9 +26,6 @@
 
             <div class="section-body">
                 <h2 class="section-title">Category</h2>
-
-
-
                 <div class="card">
                     <form action="{{ route('categories.update', $category) }}" method="POST">
                         @csrf
@@ -42,7 +39,7 @@
                                 <input type="text"
                                     class="form-control @error('name')
                                 is-invalid
-                            @enderror"
+                                @enderror"
                                     name="name" value="{{ $category->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">
@@ -50,7 +47,6 @@
                                     </div>
                                 @enderror
                             </div>
-
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
