@@ -79,12 +79,14 @@ class OrderController extends Controller
                     'available_stock' => $product->stock,
                 ], 400);
             }
+
+            $totalPrice = $totalPrice + ($item['quantity'] * $product->price);
         }
 
         //Buat order
         $order = Order::create([
             'kasir_id' => $validated['user_id'],
-            'total_price' => 0,
+            'total_price' => $totalPrice,
             'total_item' => count($validated['order_produk']),
             'payment_method' => $request->payment_method ?? 'cash',
         ]);
@@ -98,7 +100,7 @@ class OrderController extends Controller
             $order->orderProducts()->create([
                 'produk_id' => $item['produk_id'],
                 'quantity' => $item['quantity'],
-                'price' => $product->price,
+                'total_price' => $item['quantity'] * $product->price,
                 'subtotal' => $subtotal
             ]);
 
@@ -108,13 +110,11 @@ class OrderController extends Controller
             $orderProducts[] = [
                 'produk_id' => $product->id,
                 'quantity' => $item['quantity'],
-                'price' => $product->price,
+                'price' => $item['quantity'] * $product->price,
                 'subtotal' => $subtotal
             ];
         }
 
-        //Update total harga order
-        $order->update(['total_price' => $totalPrice]);
 
         DB::commit();
 
