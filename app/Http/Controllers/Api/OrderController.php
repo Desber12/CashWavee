@@ -53,6 +53,35 @@ class OrderController extends Controller
     DB::beginTransaction();
 
     try {
+        $totalPrice = 0;
+        $orderProducts = [];
+
+        //Cek stok dulu
+        foreach ($validated['order_produk'] as $item) {
+            $product = Product::find($item['produk_id']);
+
+            if (!$product) {
+                DB::rollBack();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Produk tidak ditemukan.',
+                    'produk_id' => $item['produk_id']
+                ], 404);
+            }
+
+            if ($item['quantity'] > $product->stock) {
+                DB::rollBack();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Stok produk tidak mencukupi',
+                    'produk_id' => $product->id,
+                    'requested_quantity' => $item['quantity'],
+                    'available_stock' => $product->stock,
+                ], 400);
+            }
+        }
+
+        //Buat order
         $order = Order::create([
             'kasir_id' => $validated['user_id'],
             'total_price' => 0,
@@ -60,11 +89,7 @@ class OrderController extends Controller
             'payment_method' => $request->payment_method ?? 'cash',
         ]);
 
-        $order->refresh(); // agar data terbaru dimuat dari database
-
-        $totalPrice = 0;
-        $orderProducts = [];
-
+        //Tambahkan detail order dan kurangi stok
         foreach ($validated['order_produk'] as $item) {
             $product = Product::find($item['produk_id']);
             $subtotal = $product->price * $item['quantity'];
@@ -77,6 +102,9 @@ class OrderController extends Controller
                 'subtotal' => $subtotal
             ]);
 
+            //Kurangi stok produk
+            $product->decrement('stock', $item['quantity']);
+
             $orderProducts[] = [
                 'produk_id' => $product->id,
                 'quantity' => $item['quantity'],
@@ -85,13 +113,14 @@ class OrderController extends Controller
             ];
         }
 
+        //Update total harga order
         $order->update(['total_price' => $totalPrice]);
 
         DB::commit();
 
         return response()->json([
             'success' => true,
-            'message' => 'Order created successfully',
+            'message' => 'Order berhasil dibuat',
             'data' => [
                 'order_id' => $order->id,
                 'user_id' => $order->kasir_id,
@@ -100,16 +129,17 @@ class OrderController extends Controller
                 'order_products' => $orderProducts,
                 'created_at' => $order->created_at->toDateTimeString()
             ]
-        ]);
+        ], 201);
     } catch (\Exception $e) {
         DB::rollBack();
 
         return response()->json([
             'success' => false,
-            'message' => 'Failed to create order',
+            'message' => 'Gagal membuat order',
             'error' => $e->getMessage()
         ], 500);
     }
 }
+
 
 }
