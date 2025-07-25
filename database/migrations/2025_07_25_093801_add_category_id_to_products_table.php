@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('kategori')->after('stock');
+            // tambahkan kolom category_id dan buat foreign key ke tabel categories
+            $table->foreignId('category_id')->constrained('categories')->after('stock');
         });
     }
 
@@ -22,7 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('kategori');
+            // hapus foreign key dan kolomnya jika rollback
+            $table->dropForeign(['category_id']);
+            $table->dropColumn('category_id');
         });
     }
 };
