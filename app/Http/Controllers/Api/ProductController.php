@@ -106,7 +106,7 @@ class ProductController extends Controller
     }
 
     public function filterByCategory($id)
-{
+    {
     $product = Product::where('category_id', $id)->get();
 
     return response()->json([
@@ -114,5 +114,5 @@ class ProductController extends Controller
         'message' => 'List of products by category',
         'data' => $product
     ], 200);
-}
+    }
 }

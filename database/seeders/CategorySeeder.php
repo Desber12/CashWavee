@@ -14,5 +14,5 @@ class CategorySeeder extends Seeder
             ['name' => 'Minuman'],
             ['name' => 'Snack'],
         ]);
-    }
+    }   
 }
