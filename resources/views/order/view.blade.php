@@ -28,7 +28,7 @@
                 <h2 class="section-title">Order Detail</h2>
                 <p class="section-lead">
                 <div>Total Price {{ $order->total_price }}</div>
-                <div>Transaction Time {{ $order->transaction_time }}</div>
+                <div>Transaction Time {{ $order->created_at }}</div>
                 <div>Total Item {{ $order->total_item }}</div>
 
                 </p>
@@ -56,24 +56,15 @@
                                             <th>Total Price</th>
 
                                         </tr>
-                                        @foreach ($orderProducts as $product)
-                                            <tr>
+                                       @foreach ($orderProducts as $product)
+                                        <tr>
+                                            <td>{{ $product->product->name }}</td>
+                                            <td>{{ $product->product->price }}</td>
+                                            <td>{{ $product->quantity }}</td>       
+                                            <td>{{ $product->total_price }}</td>    
+                                        </tr>
+                                    @endforeach
 
-                                                <td>{{ $product->product->name }}</td>
-                                                </td>
-                                                <td>
-                                                    {{ $product->product->price }}
-                                                </td>
-                                                <td>
-                                                    {{ $product->jumlah }}
-                                                </td>
-                                                <td>
-                                                    {{ $product->subtotal }}
-
-                                                </td>
-
-                                            </tr>
-                                        @endforeach
 
 
                                     </table>
