@@ -20,7 +20,7 @@ Route::apiResource('products', \App\Http\Controllers\Api\ProductController::clas
 Route::get('/product/{id}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
 Route::get('/product/category/{id}', [\App\Http\Controllers\Api\ProductController::class, 'filterByCategory']);
 Route::get('/products/category/{id}', [\App\Http\Controllers\Api\ProductController::class, 'getByCategory']);
-
+Route::get('/products/category/{category}', [\App\Http\Controllers\Api\ProductController::class, 'getByCategory']);
 
 // api resource order
 Route::apiResource('orders', \App\Http\Controllers\Api\OrderController::class)->middleware('auth:sanctum');

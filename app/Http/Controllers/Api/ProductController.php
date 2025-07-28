@@ -99,20 +99,20 @@ class ProductController extends Controller
         //
     }
 
-    public function getByCategory($id)
+    public function getByCategory($category)
     {
-    $product = Product::where('category_id', $id)->get();
-    return response()->json($product);
+    $products = Product::where('category', $category)->get();
+
+    if ($products->isEmpty()) {
+        return response()->json([
+            'message' => 'No products found in this category.',
+            'data' => []
+        ], 404);
     }
 
-    public function filterByCategory($id)
-    {
-    $product = Product::where('category_id', $id)->get();
-
     return response()->json([
-        'success' => true,
-        'message' => 'List of products by category',
-        'data' => $product
+        'message' => 'Products retrieved successfully.',
+        'data' => $products
     ], 200);
     }
 }
