@@ -23,8 +23,8 @@ class Product extends Model
         'is_best_seller'
     ];
 
-    public function category()
+    public function kategori()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

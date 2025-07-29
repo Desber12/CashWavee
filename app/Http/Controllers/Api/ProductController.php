@@ -13,8 +13,26 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $payload = request()->all();
+
+        $products = new \App\Models\Product;
+
+        if(!empty($payload['name'])){
+            $products = $products->where('name','LIKE','%'.$payload['name'].'%');
+        }
+
+        if(!empty($payload['category_id'])){
+            $products = $products->where('category_id', $payload['category_id']);
+        }
+                                
+        if(!empty($payload['order_sort']) && !empty($payload['order_by'])){
+            $products = $products->orderBy($payload['order_by'], $payload['order_sort']);   
+        }
+
+        $products = $products->paginate((!empty($payload['per_page'])) ? $payload['per_page'] : 10);
+
+
         //all products
-        $products = \App\Models\Product::orderBy('id', 'desc')->get();
         return response()->json([
             'success' => true,
             'message' => 'List Data Product',

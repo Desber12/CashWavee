@@ -3,6 +3,16 @@
 @section('title', 'Products')
 
 @push('style')
+    <style>
+        table.table, 
+        table.table th, 
+        table.table td {
+            border: 1px solid black !important;
+        }
+        table.table {
+            border-collapse: collapse;
+        }
+    </style>
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 @endpush
@@ -64,7 +74,7 @@
                                             @foreach ($products as $product)
                                                 <tr>
                                                     <td>{{ $product->name }}</td>
-                                                    <td>{{ $product->category }}</td>
+                                                    <td>{{ $product->kategori->name }}</td>
                                                     <td>{{ $product->price }}</td>
                                                     <td>{{ $product->stock }}</td>
                                                     <td>

@@ -13,13 +13,48 @@ class OrderController extends Controller
 {
     public function index()
     {
-    $orders = Order::with('products')->orderBy('created_at', 'desc')->get();
+    $payload = request()->all();
 
+         $orders = \App\Models\Order::query();
+        
+        if(!empty($payload['order'])){
+            $orders->where('order','LIKE','%'.$payload['order'].'%');
+        }
+
+        if(!empty($payload['id'])){
+            $orders->where('id', $payload['id']);
+        }
+
+        if(!empty($payload['kasir_id'])){
+            $orders->where('kasir_id', $payload['kasir_id']);
+        }
+
+        if(!empty($payload['created_at'])){
+            $orders->whereDate('created_at', $payload['created_at']);
+        }
+                                
+        if(!empty($payload['order_sort']) && !empty($payload['order_by'])){
+            $orders->orderBy($payload['order_by'], $payload['order_sort']);
+        }
+
+        $perPage = !empty($payload['per_page']) ? (int)$payload['per_page'] : 10;
+
+        $orders = $orders->paginate($perPage);
+        
     return response()->json([
         'success' => true,
         'message' => 'List of Orders',
         'data' => $orders
     ], 200);
+
+    if ($orders->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Not Found',
+            'data' => []
+        ], 404);
+    }
+
     }
 
     public function show($id)
