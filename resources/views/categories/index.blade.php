@@ -3,6 +3,16 @@
 @section('title', 'Categories')
 
 @push('style')
+    <style>
+        table.table, 
+        table.table th, 
+        table.table td {
+            border: 1px solid black !important;
+        }
+        table.table {
+            border-collapse: collapse;
+        }
+    </style>
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 @endpush
@@ -60,7 +70,7 @@
                                             <tr>
                                                 <td>{{ $category->name }}</td>
                                                 <td>{{ $category->created_at ? $category->created_at->format('d M Y H:i') : 'k' }}</td>
-                                                <td><div class="d-flex justify-content-center">
+                                                <td><div class="d-flex justify-content-start">
                                                         <a href='{{ route('categories.edit', $category->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>

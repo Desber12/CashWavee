@@ -3,6 +3,16 @@
 @section('title', 'Users')
 
 @push('style')
+    <style>
+        table.table, 
+        table.table th, 
+        table.table td {
+            border: 1px solid black !important;
+        }
+        table.table {
+            border-collapse: collapse;
+        }
+    </style>
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 @endpush
@@ -69,7 +79,7 @@
 
                                                 <td>{{ $user->created_at }}</td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center">
+                                                    <div class="d-flex justify-content-start">
                                                         <a href='{{ route('user.edit', $user->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>

@@ -89,7 +89,7 @@
                                                     </td>
                                                     <td>{{ $product->created_at }}</td>
                                                     <td>
-                                                        <div class="d-flex justify-content-center">
+                                                        <div class="d-flex justify-content-start">
                                                             <a href="{{ route('product.edit', $product->id) }}"
                                                                class="btn btn-sm btn-info btn-icon mr-2">
                                                                 <i class="fas fa-edit"></i> Edit
