@@ -30,11 +30,11 @@ class OrderController extends Controller
         }
 
         if (!empty($payload['start_date']) && !empty($payload['end_date'])) {
-        $orders->whereBetween('created_at', [
-            $payload['start_date'] . ' 00:00:00',
-            $payload['end_date'] . ' 23:59:59'
-        ]);
-        } elseif (!empty($payload['created_at'])) {
+        $orders->whereDate('created_at', ">=", $payload['start_date'])
+        ->whereDate('created_at', "<=", $payload['end_date']);
+        }
+        
+        if(!empty($payload['created_at'])) {
         $orders->whereDate('created_at', $payload['created_at']);
         }
                     
