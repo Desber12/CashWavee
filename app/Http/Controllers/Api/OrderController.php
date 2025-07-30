@@ -29,10 +29,15 @@ class OrderController extends Controller
             $orders->where('kasir_id', $payload['kasir_id']);
         }
 
-        if(!empty($payload['created_at'])){
-            $orders->whereDate('created_at', $payload['created_at']);
+        if (!empty($payload['start_date']) && !empty($payload['end_date'])) {
+        $orders->whereBetween('created_at', [
+            $payload['start_date'] . ' 00:00:00',
+            $payload['end_date'] . ' 23:59:59'
+        ]);
+        } elseif (!empty($payload['created_at'])) {
+        $orders->whereDate('created_at', $payload['created_at']);
         }
-                                
+                    
         if(!empty($payload['order_sort']) && !empty($payload['order_by'])){
             $orders->orderBy($payload['order_by'], $payload['order_sort']);
         }
