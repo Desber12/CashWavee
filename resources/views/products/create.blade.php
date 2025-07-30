@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
     <link rel="stylesheet" href="{{ asset('library/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
+    <style>
+    .form-control {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+    }
+
+    .form-control:focus {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+    }
+</style>
 @endpush
 
 @section('main')
@@ -29,7 +40,7 @@
         @csrf
         <div class="card-header">
             <h4>Product Form</h4>
-        </div> {{-- ✅ Tutup card-header di sini --}}
+        </div>
         <div class="card-body">
             <div class="form-group">
                 <label>Name</label>

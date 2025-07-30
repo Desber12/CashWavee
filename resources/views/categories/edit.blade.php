@@ -37,9 +37,8 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                                @enderror"
+                                    style="border: 1px solid black; box-shadow: none;"
+                                    class="form-control @error('name') is-invalid @enderror"
                                     name="name" value="{{ $category->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">
