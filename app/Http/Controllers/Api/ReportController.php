@@ -40,7 +40,7 @@ class ReportController extends Controller
         $totalSoldQuantity = DB::table('order_produk')
             ->join('orders', 'order_produk.order_id', '=', 'orders.id')
             ->whereBetween('orders.created_at', [$start_date, $end_date])
-            ->sum('order_produk.jumlah');
+            ->sum('order_produk.quantity');
 
         return response()->json([
             'status' => 'success',
